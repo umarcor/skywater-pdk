@@ -1,0 +1,35 @@
+name: README
+
+on:
+  pull_request:
+
+jobs:
+
+  readme:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Checkout third_party/make-env
+      run: git submodule update --init --recursive third_party/make-env
+
+    - name: Build README.rst
+      run: make README.rst
+
+    - name: Commit changes
+      run: |
+        git diff --exit-code README.rst > /dev/null 2>&1 && exit 0 || true
+
+        git config --local user.name GHA
+        git config --local user.email GHA@Skywater
+
+        git add README.rst
+        git commit -m "GHA: update README.rst"
+
+        if git push origin HEAD:${{ github.head_ref }}; then
+          echo 'Pushing updated README.rst failed!'
+          echo "Please, allow edits from maintainers or run 'make README.rst' locally"
+        fi
