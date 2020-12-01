@@ -1,6 +1,8 @@
 SkyWater Open Source PDK
 ========================
 
+Updating!
+
 .. image:: https://img.shields.io/github/license/google/skywater-pdk
    :alt: GitHub license - Apache 2.0
    :target: https://github.com/google/skywater-pdk
