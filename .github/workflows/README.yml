@@ -33,3 +33,7 @@ jobs:
           echo 'Pushing updated README.rst failed!'
           echo "Please, allow edits from maintainers or run 'make README.rst' locally"
         fi
+
+    - env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
