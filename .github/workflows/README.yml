@@ -29,7 +29,11 @@ jobs:
         git add README.rst
         git commit -m "GHA: update README.rst"
 
-        if git push origin HEAD:${{ github.head_ref }}; then
+        echo 'SOURCE: ${{ github.event.pull_request.base.head.full_name }}'
+
+        git remote add source https://${{ github.token }}@github.com/${{ github.event.pull_request.head.repo.full_name }}
+
+        if git push source HEAD:${{ github.head_ref }}; then
           echo 'Pushing updated README.rst failed!'
           echo "Please, allow edits from maintainers or run 'make README.rst' locally"
         fi
